@@ -13,27 +13,7 @@ class File
      */
     public function index()
     {
-        $dir = "./share/";
-        $files = scandir($dir);
-        $data = [];
-        foreach ($files as $file) {
-            if ($file == '.' || $file == '..') {
-                continue;
-            }
-            if (is_dir($dir.$file)) {
-                if (PATH_SEPARATOR === ';') {
-                    $file = iconv('GBK', 'UTF-8', $file);
-                }
-                $data['dir'][] = $file;
-            }
-            if (is_file($dir.$file)) {
-                if (PATH_SEPARATOR === ';') {
-                    $file = iconv('GBK', 'UTF-8', $file);
-                }
-                $data['file'][] = $file;
-            }
-        }
-        return json($data);
+
     }
 
     /**
@@ -60,12 +40,32 @@ class File
     /**
      * 显示指定的资源
      *
-     * @param  int  $id
+     * @param  int  $path
      * @return \think\Response
      */
-    public function read($id)
+    public function read($path)
     {
-        //
+        $dir = "./share/".$path;
+        $files = scandir($dir);
+        $data = [];
+        foreach ($files as $file) {
+            if ($file == '.' || $file == '..') {
+                continue;
+            }
+            if (is_dir($dir.$file)) {
+                if (PATH_SEPARATOR === ';') {
+                    $file = iconv('GBK', 'UTF-8', $file);
+                }
+                $data['dir'][] = $file;
+            }
+            if (is_file($dir.$file)) {
+                if (PATH_SEPARATOR === ';') {
+                    $file = iconv('GBK', 'UTF-8', $file);
+                }
+                $data['file'][] = $file;
+            }
+        }
+        return json($data);
     }
 
     /**

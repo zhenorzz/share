@@ -360,6 +360,7 @@ gallery.html css
 .gallery-title {
   margin-top: 6px;
   font-size: 1.4rem;
+  text-align: center;
 }
 
 .gallery-desc {
