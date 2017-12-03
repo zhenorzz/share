@@ -14,20 +14,25 @@ class File
     public function index()
     {
         $dir = "./share/";
-        $resource = opendir($dir);
+        $files = scandir($dir);
         $data = [];
-        while ($row = readdir($resource)) {
-            if ($row == '.' || $row == '..') {
+        foreach ($files as $file) {
+            if ($file == '.' || $file == '..') {
                 continue;
             }
-            if (is_dir($dir.$row)) {
-                $data['dir'][] = $row;
+            if (is_dir($dir.$file)) {
+                if (PATH_SEPARATOR === ';') {
+                    $file = iconv('GBK', 'UTF-8', $file);
+                }
+                $data['dir'][] = $file;
             }
-            if (is_file($dir.$row)) {
-                $data['file'][] = $row;
+            if (is_file($dir.$file)) {
+                if (PATH_SEPARATOR === ';') {
+                    $file = iconv('GBK', 'UTF-8', $file);
+                }
+                $data['file'][] = $file;
             }
         }
-        closedir($resource);
         return json($data);
     }
 

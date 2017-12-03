@@ -7,10 +7,10 @@
     <meta name="keywords" content="index">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="renderer" content="webkit">
-    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
     <link rel="icon" href="favicon.ico">
     <link rel="apple-touch-icon-precomposed" href="assets/i/app-icon72x72@2x.png">
-    <meta name="apple-mobile-web-app-title" content="Amaze UI" />
+    <meta name="apple-mobile-web-app-title" content="Amaze UI"/>
     <link rel="stylesheet" href="assets/css/amazeui.min.css"/>
     <link rel="stylesheet" href="assets/css/admin.css">
 </head>
@@ -22,13 +22,15 @@
 
 <header class="am-topbar am-topbar-inverse admin-header">
     <div class="am-topbar-brand">
-        <strong>Zzzz</strong> <small>服务器文件共享</small>
+        <strong>Zzzz</strong>
+        <small>服务器文件共享</small>
     </div>
 
     <div class="am-collapse am-topbar-collapse" id="topbar-collapse">
 
         <ul class="am-nav am-nav-pills am-topbar-nav am-topbar-right admin-header-list">
-            <li class="am-hide-sm-only"><a href="javascript:;" id="admin-fullscreen"><span class="am-icon-arrows-alt"></span> <span class="admin-fullText">开启全屏</span></a></li>
+            <li class="am-hide-sm-only"><a href="javascript:;" id="admin-fullscreen"><span
+                    class="am-icon-arrows-alt"></span> <span class="admin-fullText">开启全屏</span></a></li>
         </ul>
     </div>
 </header>
@@ -40,9 +42,12 @@
             <ul class="am-list admin-sidebar-list">
                 <li><a href="#"><span class="am-icon-folder"></span> 目录</a></li>
                 <li class="admin-parent">
-                    <a class="am-cf" data-am-collapse="{target: '#collapse-nav'}"><span class="am-icon-briefcase"></span> 小工具 <span class="am-icon-angle-right am-fr am-margin-right"></span></a>
+                    <a class="am-cf" data-am-collapse="{target: '#collapse-nav'}"><span
+                            class="am-icon-briefcase"></span> 小工具 <span
+                            class="am-icon-angle-right am-fr am-margin-right"></span></a>
                     <ul class="am-list am-collapse admin-sidebar-sub am-in" id="collapse-nav">
-                        <li><a href="#" class="am-cf"><span class="am-icon-link"></span> Http<span class="am-icon-star am-fr am-margin-right admin-icon-yellow"></span></a></li>
+                        <li><a href="#" class="am-cf"><span class="am-icon-link"></span> Http<span
+                                class="am-icon-star am-fr am-margin-right admin-icon-yellow"></span></a></li>
                     </ul>
                 </li>
             </ul>
@@ -63,70 +68,8 @@
 
             <hr>
 
-            <ul class="am-avg-sm-4 am-avg-md-8 am-avg-lg-12 am-margin gallery-list">
-                <li>
-                    <a href="#">
-                        <img class="am-img-thumbnail am-img-bdrs" src="static/images/folder.png" alt=""/>
-                        <div class="gallery-title"></div>
-                        <div class="gallery-desc">2375-09-26</div>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <img class="am-img-thumbnail am-img-bdrs" src="static/images/android.png" alt=""/>
-                        <div class="gallery-title"></div>
-                        <div class="gallery-desc">2375-09-26</div>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <img class="am-img-thumbnail am-img-bdrs" src="static/images/zip.png" alt=""/>
-                        <div class="gallery-title"></div>
-                        <div class="gallery-desc">2375-09-26</div>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <img class="am-img-thumbnail am-img-bdrs" src="static/images/markdown.png" alt=""/>
-                        <div class="gallery-title"></div>
-                        <div class="gallery-desc">2375-09-26</div>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <img class="am-img-thumbnail am-img-bdrs" src="static/images/text.png" alt=""/>
-                        <div class="gallery-title"></div>
-                        <div class="gallery-desc">2375-09-26</div>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <img class="am-img-thumbnail am-img-bdrs" src="static/images/word.png" alt=""/>
-                        <div class="gallery-title"></div>
-                        <div class="gallery-desc">2375-09-26</div>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <img class="am-img-thumbnail am-img-bdrs" src="static/images/excel.png" alt=""/>
-                        <div class="gallery-title"></div>
-                        <div class="gallery-desc">2375-09-26</div>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <img class="am-img-thumbnail am-img-bdrs" src="static/images/pdf.png" alt=""/>
-                        <div class="gallery-title"></div>
-                        <div class="gallery-desc">2375-09-26</div>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <img class="am-img-thumbnail am-img-bdrs" src="static/images/unknown.png" alt=""/>
-                        <div class="gallery-title"></div>
-                        <div class="gallery-desc">2375-09-26</div>
-                    </a>
-                </li>
+            <ul class="am-avg-sm-4 am-avg-md-8 am-avg-lg-12 am-margin gallery-list" id="file-ul">
+
             </ul>
 
             <div class="am-margin am-cf">
@@ -153,8 +96,18 @@
 
 </div>
 
-<a href="#" class="am-icon-btn am-icon-th-list am-show-sm-only admin-menu" data-am-offcanvas="{target: '#admin-offcanvas'}"></a>
+<a href="#" class="am-icon-btn am-icon-th-list am-show-sm-only admin-menu"
+   data-am-offcanvas="{target: '#admin-offcanvas'}"></a>
 
+<script type="text/html" id="file-li">
+    <li>
+        <a href="#">
+            <img class="am-img-thumbnail am-img-bdrs" src="" alt=""/>
+            <div class="gallery-title"></div>
+            <div class="gallery-desc"></div>
+        </a>
+    </li>
+</script>
 <!--[if lt IE 9]>
 <script src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
 <script src="http://cdn.staticfile.org/modernizr/2.8.3/modernizr.js"></script>
