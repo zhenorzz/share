@@ -26,6 +26,8 @@ function writeFiles(data, dir) {
         fileLi.find('a').attr('href', '/index/File/download?file=' + dir + files[i]).attr('target', '_blank');
         fileLi.find('.gallery-title').text(files[i]);
         fileUl.append(fileLi);
+        $('#catalog').children().removeClass('am-disabled');
+        $('#catalog').children(":last").addClass('am-disabled');
     }
 }
 
