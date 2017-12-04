@@ -34,22 +34,22 @@ $.get("/index/File/read", {path: ''}, function (data) {
 });
 
 $('#file-ul').on("click", ".dir-li", function () {
-    var breadcrumbOl = $('#breadcrumb-ol');
-    var child = breadcrumbOl.children('li:last');
+    var catalog = $('#catalog');
+    var child = catalog.children('button:last');
     var file = $.trim($(this).text());
     var dir = child.data('value') + file + '/';
     $.get("/index/File/read", {path: dir}, function (data) {
-        var li = '<li class="am-active" data-value="' + dir + '"><a href="#">' + file + '</a></li>';
-        breadcrumbOl.append(li);
+        var button = '<button type="button" class="am-btn am-btn-default" data-value="' + dir + '">' + file + '</button>';
+        catalog.append(button);
         writeFiles(data, dir);
     });
 });
 
-$('#breadcrumb-ol').on("click", "li", function () {
+$('#catalog').on("click", "button", function () {
     var index = $(this).index();
     var dir = $.trim($(this).data('value'));
     $.get("/index/File/read", {path: dir}, function (data) {
-        $('#breadcrumb-ol').children("li:gt(" + index + ")").remove();
+        $('#catalog').children("button:gt(" + index + ")").remove();
         writeFiles(data, dir);
     });
 });
