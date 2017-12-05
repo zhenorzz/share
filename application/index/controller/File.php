@@ -135,4 +135,19 @@ class File
         }
         fclose($fp);
     }
+
+    /**
+     * 下载指定资源
+     *
+     * @param  string $path
+     * @return \think\response\Json
+     */
+    public function upload($path)
+    {
+        $file = $_FILES['file'];
+        $path = "./share/" . $path;
+        $name = $path . $_FILES["file"]["name"];
+        move_uploaded_file($file["tmp_name"], $name);
+        return json($file);
+    }
 }

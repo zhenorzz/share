@@ -20,6 +20,9 @@ function writeFiles(data, dir) {
             case '.txt':
                 fileLi.find('img').attr('src', 'static/images/txt.png');
                 break;
+            case '.html':
+                fileLi.find('img').attr('src', 'static/images/html.png');
+                break;
             default:
                 fileLi.find('img').attr('src', 'static/images/unknown.png');
         }
@@ -30,28 +33,50 @@ function writeFiles(data, dir) {
         $('#catalog').children(":last").addClass('am-disabled');
     }
 }
-
-$.get("/index/File/read", {path: ''}, function (data) {
-    writeFiles(data, '');
-});
-
-$('#file-ul').on("click", ".dir-li", function () {
-    var catalog = $('#catalog');
-    var child = catalog.children('button:last');
-    var file = $.trim($(this).text());
-    var dir = child.data('value') + file + '/';
-    $.get("/index/File/read", {path: dir}, function (data) {
-        var button = '<button type="button" class="am-btn am-btn-default" data-value="' + dir + '">' + file + '</button>';
-        catalog.append(button);
-        writeFiles(data, dir);
+$(function() {
+    $.get("/index/File/read", {path: ''}, function (data) {
+        writeFiles(data, '');
     });
-});
 
-$('#catalog').on("click", "button", function () {
-    var index = $(this).index();
-    var dir = $.trim($(this).data('value'));
-    $.get("/index/File/read", {path: dir}, function (data) {
-        $('#catalog').children("button:gt(" + index + ")").remove();
-        writeFiles(data, dir);
+    $('#file-ul').on("click", ".dir-li", function () {
+        var catalog = $('#catalog');
+        var child = catalog.children('button:last');
+        var file = $.trim($(this).text());
+        var dir = child.data('value') + file + '/';
+        $.get("/index/File/read", {path: dir}, function (data) {
+            var button = '<button type="button" class="am-btn am-btn-default" data-value="' + dir + '">' + file + '</button>';
+            catalog.append(button);
+            writeFiles(data, dir);
+        });
+    });
+
+    $('#catalog').on("click", "button", function () {
+        var index = $(this).index();
+        var dir = $.trim($(this).data('value'));
+        $.get("/index/File/read", {path: dir}, function (data) {
+            $('#catalog').children("button:gt(" + index + ")").remove();
+            writeFiles(data, dir);
+        });
+    });
+
+    $('#fileUpload').change(function () {
+        var formData = new FormData($('#uploadForm')[0]);
+        var dir = $('#catalog').children('button:last').data('value');
+        var url = "/index/File/upload?path=" + dir;
+        $.ajax({
+            url: url,
+            type: 'POST',
+            cache: false,
+            data: formData,
+            processData: false,
+            contentType: false,
+            beforeSend: function () {
+            },
+            success: function (data) {
+                $.get("/index/File/read", {path: dir}, function (data) {
+                    writeFiles(data, '');
+                });
+            }
+        });
     });
 });
