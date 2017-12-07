@@ -2,6 +2,7 @@
 
 namespace app\index\controller;
 
+use cebe\markdown\GithubMarkdown;
 use think\Request;
 
 class File
@@ -100,6 +101,28 @@ class File
     public function delete($id)
     {
         //
+    }
+
+    /**
+     * 下载指定资源
+     *
+     * @param  int $file
+     */
+    public function preview($file)
+    {
+        //用以解决中文不能显示出来的问题
+        $file_name = "./share/" . $file;
+        $file_name = iconv("utf-8", "gb2312", $file_name);
+        //首先要判断给定的文件存在与否
+        if (!file_exists($file_name)) {
+            echo "没有该文件文件";
+            return;
+        }
+        $markdown = file_get_contents($file_name);
+        $parser = new GithubMarkdown();
+        $parser->html5 = true;
+        $parser->enableNewlines = true;
+        echo $parser->parse($markdown);
     }
 
     /**

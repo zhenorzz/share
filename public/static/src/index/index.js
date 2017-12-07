@@ -23,16 +23,21 @@ function writeFiles(data, dir) {
             case '.html':
                 fileLi.find('img').attr('src', 'static/images/html.png');
                 break;
+            case '.md':
+                fileLi.find('img').attr('src', 'static/images/markdown.png');
+                break;
             default:
                 fileLi.find('img').attr('src', 'static/images/unknown.png');
         }
-        fileLi.find('a').attr('href', '/index/File/download?file=' + dir + files[i]).attr('target', '_blank');
+        // fileLi.find('a').attr('href', '/index/File/preview?file=' + dir + files[i]).attr('target', '_blank');
+        fileLi.addClass('file-li');
         fileLi.find('.gallery-title').text(files[i]);
         fileUl.append(fileLi);
         $('#catalog').children().removeClass('am-disabled');
         $('#catalog').children(":last").addClass('am-disabled');
     }
 }
+
 $(function() {
     $.get("/index/File/read", {path: ''}, function (data) {
         writeFiles(data, '');
@@ -48,6 +53,12 @@ $(function() {
             catalog.append(button);
             writeFiles(data, dir);
         });
+    });
+
+    $('#file-ul').on("click", ".file-li", function () {
+        $('#fileOperation').removeClass('am-hide');
+        $('.gallery-title').css('color','#666');
+        $(this).find('.gallery-title').css('color','#0e90d2');
     });
 
     $('#catalog').on("click", "button", function () {
@@ -79,4 +90,18 @@ $(function() {
             }
         });
     });
+
+    /**
+     * 以target为起点向上查找父（祖）元素，若父（祖）元素中包含#fileOperation,.file-li中一个就不执行if中语句，即长度不为0
+     *.closest()沿 DOM 树向上遍历(以数组形式入参)，直到找到已应用选择器的一个匹配为止，返回包含零个或一个元素的 jQuery 对象。
+     **/
+    $(document).bind("click",function(e){
+        var target  = $(e.target);    //e.target获取触发事件的元素
+        if(target.closest("#fileOperation,.file-li").length === 0){
+            //进入if则表明点击的不是#phone,#first元素中的一个
+            $('.gallery-title').css('color','#666');
+            $('#fileOperation').addClass('am-hide');
+        }
+        e.stopPropagation();
+    })
 });
