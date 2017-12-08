@@ -1,8 +1,5 @@
-$(function() {
-    $.get("/index/File/read", {path: ''}, function (data) {
-        writeFiles(data, '');
-    });
-
+$(function () {
+    read('');
     //点进文件夹
     $('#file-ul').on("click", ".dir-li", function () {
         var catalog = $('#catalog');
@@ -10,7 +7,8 @@ $(function() {
         var file = $.trim($(this).text());
         var dir = child.data('value') + file + '/';
         $.get("/index/File/read", {path: dir}, function (data) {
-            var button = '<button type="button" class="am-btn am-btn-default" data-value="' + dir + '">' + file + '</button>';
+            child.removeClass('am-disabled');
+            var button = '<button type="button" class="am-btn am-btn-default am-disabled" data-value="' + dir + '">' + file + '</button>';
             catalog.append(button);
             writeFiles(data, dir);
         });
@@ -20,8 +18,8 @@ $(function() {
     $('#file-ul').on("click", ".file-li", function () {
         var file = $(this).data('file');
         $('#fileOperation').removeClass('am-hide').children('button').data('file', file);
-        $('.gallery-title').css('color','#666');
-        $(this).find('.gallery-title').css('color','#0e90d2');
+        $('.gallery-title').css('color', '#666');
+        $(this).find('.gallery-title').css('color', '#0e90d2');
     });
 
     //目录nav跳转
@@ -48,38 +46,57 @@ $(function() {
             contentType: false,
             beforeSend: function () {
             },
-            success: function (data) {
-                $.get("/index/File/read", {path: dir}, function (data) {
-                    writeFiles(data, '');
-                });
+            success: function () {
+                read(dir);
             }
         });
     });
 
     //预览
     $('#filePreview').click(function () {
-        window.open('/index/File/preview?file='+ $(this).data('file'));
+        window.open('/index/File/preview?file=' + $(this).data('file'));
     });
 
     //下载
     $('#fileDownload').click(function () {
-        window.open('/index/File/download?file='+ $(this).data('file'));
+        window.open('/index/File/download?file=' + $(this).data('file'));
     });
+
+    //删除
+    $('#fileRemove').click(function () {
+        var file = $(this).data('file');
+        $.post('/index/File/delete', {file: file}, function (data) {
+            var index = file.lastIndexOf("/");
+            if (index === -1) {
+                read('');
+            } else {
+                read(file.substr(index));
+            }
+        });
+    });
+
     /**
      * 以target为起点向上查找父（祖）元素，若父（祖）元素中包含#fileOperation,.file-li中一个就不执行if中语句，即长度不为0
      *.closest()沿 DOM 树向上遍历(以数组形式入参)，直到找到已应用选择器的一个匹配为止，返回包含零个或一个元素的 jQuery 对象。
      **/
-    $(document).bind("click",function(e){
-        var target  = $(e.target);    //e.target获取触发事件的元素
-        if(target.closest("#fileOperation,.file-li").length === 0){
+    $(document).bind("click", function (e) {
+        var target = $(e.target);    //e.target获取触发事件的元素
+        if (target.closest("#fileOperation,.file-li").length === 0) {
             //进入if则表明点击的不是#phone,#first元素中的一个
-            $('.gallery-title').css('color','#666');
+            $('.gallery-title').css('color', '#666');
             $('#fileOperation').addClass('am-hide');
         }
         e.stopPropagation();
     })
 });
 
+
+//读文件
+function read(dir) {
+    $.get("/index/File/read", {path: dir}, function (data) {
+        writeFiles(data, dir);
+    });
+}
 
 function writeFiles(data, dir) {
     var dirs = data.dir;

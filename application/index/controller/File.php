@@ -95,12 +95,19 @@ class File
     /**
      * 删除指定资源
      *
-     * @param  int $id
-     * @return \think\Response
+     * @param  string $file
+     * @return string
      */
-    public function delete($id)
+    public function delete($file)
     {
-        //
+        //用以解决中文不能显示出来的问题
+        $file_name = "./share/" . $file;
+        $file_name = iconv("utf-8", "gb2312", $file_name);
+        if (!file_exists($file_name)) {
+            return false;
+        }
+        unlink($file_name);
+        return $file;
     }
 
     /**
@@ -170,6 +177,7 @@ class File
         $file = $_FILES['file'];
         $path = "./share/" . $path;
         $name = $path . $_FILES["file"]["name"];
+        $name = iconv("utf-8", "gb2312", $name);
         move_uploaded_file($file["tmp_name"], $name);
         return json($file);
     }
