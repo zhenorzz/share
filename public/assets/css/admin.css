@@ -337,6 +337,9 @@ ul {
 }
 
 @media only screen and (max-width: 640px) {
+    .am-popup-hd{
+        position: relative;
+    }
     .table-select {
         margin-top: 10px;
         margin-left: 5px;

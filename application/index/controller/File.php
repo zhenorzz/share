@@ -18,13 +18,21 @@ class File
     }
 
     /**
-     * 显示创建资源表单页.
+     * 创建目录.
      *
-     * @return \think\Response
+     * @param Request $request
+     * @return string|bool
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $param = $request->post();
+        $dir = "./share/" . trim($param['dir']) . trim($param['name']) . DS;
+        $dir = iconv("UTF-8", "GBK", $dir);
+        if (file_exists($dir)) {
+            return "已存在文件夹";
+        }
+        mkdir ($dir,0777);
+        return true;
     }
 
     /**
@@ -111,9 +119,10 @@ class File
     }
 
     /**
-     * 下载指定资源
+     * 预览指定资源
      *
-     * @param  int $file
+     * @param  string $file
+     * @return string
      */
     public function preview($file)
     {
@@ -122,14 +131,14 @@ class File
         $file_name = iconv("utf-8", "gb2312", $file_name);
         //首先要判断给定的文件存在与否
         if (!file_exists($file_name)) {
-            echo "没有该文件文件";
-            return;
+            return "没有该文件文件";
         }
         $markdown = file_get_contents($file_name);
+//        return nl2br(htmlentities($markdown,ENT_QUOTES,"UTF-8"));
         $parser = new GithubMarkdown();
         $parser->html5 = true;
         $parser->enableNewlines = true;
-        echo $parser->parse($markdown);
+        return $parser->parse($markdown);
     }
 
     /**

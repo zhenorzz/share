@@ -1,103 +1,89 @@
-<!doctype html>
-<html class="no-js fixed-layout">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>文件共享</title>
-    <meta name="keywords" content="index">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="renderer" content="webkit">
-    <meta http-equiv="Cache-Control" content="no-siteapp"/>
-    <link rel="icon" href="favicon.ico">
-    <link rel="apple-touch-icon-precomposed" href="assets/i/app-icon72x72@2x.png">
-    <meta name="apple-mobile-web-app-title" content="Amaze UI"/>
-    <link rel="stylesheet" href="assets/css/amazeui.min.css"/>
-    <link rel="stylesheet" href="assets/css/admin.css">
-</head>
-<body>
-<!--[if lte IE 9]>
-<p class="browsehappy">你正在使用<strong>过时</strong>的浏览器，Amaze UI 暂不支持。 请 <a href="http://browsehappy.com/" target="_blank">升级浏览器</a>
-    以获得更好的体验！</p>
-<![endif]-->
+{extend name="base" /}
 
-<header class="am-topbar am-topbar-inverse admin-header">
-    <div class="am-topbar-brand">
-        <strong>Zzzz</strong>
-        <small>服务器文件共享</small>
-    </div>
+{block name="content"}
+<!-- content start -->
+<div class="admin-content">
+    <div class="admin-content-body">
+        <!--<div class="am-cf am-padding am-padding-bottom-0">-->
+        <!--<ol class="am-breadcrumb am-breadcrumb-slash am-margin-bottom-0" id="breadcrumb-ol">-->
+        <!--<li data-value=""><a href="#" class="am-icon-folder">根目录</a></li>-->
+        <!--</ol>-->
+        <!--</div>-->
+        <div class="am-cf am-padding am-padding-bottom-0 am-btn-toolbar">
+            <div class="am-btn-group am-btn-group-sm" id="catalog">
+                <button type="button" class="am-btn am-btn-default" data-value="">根目录</button>
+            </div>
+            <div class="am-btn-group am-form-file am-btn-group-sm">
+                <form id="uploadForm" enctype="multipart/form-data">
+                    <button type="button" class="am-btn am-btn-default am-btn-sm">
+                        <i class="am-icon-cloud-upload"></i> 选择要上传的文件</button>
+                    <input id="fileUpload" type="file" name="file" multiple="">
+                </form>
+            </div>
+            <div class="am-btn-group am-form-file am-btn-group-sm">
+                <button type="button" class="am-btn am-btn-default am-btn-sm" data-dir="" id="dirCreate">
+                    <i class="am-icon-folder-open"></i> 新建文件夹</button>
+            </div>
+            <div class="am-btn-group am-btn-group-sm am-hide" id="fileOperation">
+                <button type="button" class="am-btn am-btn-default" id="fileDownload"><i class="am-icon-download"></i></button>
+                <button type="button" class="am-btn am-btn-default" data-am-modal="{target: '#myQrcode'}" id="fileQrcode"><i class="am-icon-qrcode"></i></button>
+                <button type="button" class="am-btn am-btn-default" data-am-modal="{target: '#my-popup'}" id="filePreview"><i class="am-icon-eye"></i></button>
+                <button type="button" class="am-btn am-btn-default" id="fileRemove"><i class="am-icon-remove"></i></button>
+            </div>
+        </div>
+        <hr>
 
-    <div class="am-collapse am-topbar-collapse" id="topbar-collapse">
+        <ul class="am-avg-sm-4 am-avg-md-8 am-avg-lg-12 am-margin gallery-list" id="file-ul">
 
-        <ul class="am-nav am-nav-pills am-topbar-nav am-topbar-right admin-header-list">
-            <li class="am-hide-sm-only"><a href="javascript:;" id="admin-fullscreen"><span
-                    class="am-icon-arrows-alt"></span> <span class="admin-fullText">开启全屏</span></a></li>
         </ul>
     </div>
-</header>
 
-<div class="am-cf admin-main">
-    <!-- sidebar start -->
-    <div class="admin-sidebar am-offcanvas" id="admin-offcanvas">
-        <div class="am-offcanvas-bar admin-offcanvas-bar">
-            <ul class="am-list admin-sidebar-list">
-                <li><a href="#"><span class="am-icon-folder"></span> 目录</a></li>
-                <li class="admin-parent">
-                    <a class="am-cf" data-am-collapse="{target: '#collapse-nav'}"><span
-                            class="am-icon-briefcase"></span> 小工具 <span
-                            class="am-icon-angle-right am-fr am-margin-right"></span></a>
-                    <ul class="am-list am-collapse admin-sidebar-sub am-in" id="collapse-nav">
-                        <li><a href="#" class="am-cf"><span class="am-icon-link"></span> Http<span
-                                class="am-icon-star am-fr am-margin-right admin-icon-yellow"></span></a></li>
-                    </ul>
-                </li>
-            </ul>
+    <footer class="admin-content-footer">
+        <hr>
+        <p class="am-padding-left">© 2017 Zzzzz, Inc. Licensed under Zzz license.</p>
+    </footer>
+</div>
+<!-- content end -->
+
+{/block}
+{block name="modal"}
+<!--预览框-->
+<div class="am-popup" id="my-popup">
+    <div class="am-popup-inner">
+        <div class="am-popup-hd">
+            <h4 class="am-popup-title" id="previewTitle"></h4>
+            <span data-am-modal-close class="am-close">&times;</span>
+        </div>
+        <div class="am-popup-bd" id="previewContent">
         </div>
     </div>
-    <!-- sidebar end -->
-
-    <!-- content start -->
-    <div class="admin-content">
-        <div class="admin-content-body">
-            <!--<div class="am-cf am-padding am-padding-bottom-0">-->
-                <!--<ol class="am-breadcrumb am-breadcrumb-slash am-margin-bottom-0" id="breadcrumb-ol">-->
-                    <!--<li data-value=""><a href="#" class="am-icon-folder">根目录</a></li>-->
-                <!--</ol>-->
-            <!--</div>-->
-            <div class="am-cf am-padding am-padding-bottom-0 am-btn-toolbar">
-                <div class="am-btn-group am-btn-group-sm" id="catalog">
-                    <button type="button" class="am-btn am-btn-default" data-value="">根目录</button>
-                </div>
-                <div class="am-btn-group am-form-file am-btn-group-sm">
-                    <form id="uploadForm" enctype="multipart/form-data">
-                        <button type="button" class="am-btn am-btn-default am-btn-sm">
-                            <i class="am-icon-cloud-upload"></i> 选择要上传的文件</button>
-                        <input id="fileUpload" type="file" name="file" multiple="">
-                    </form>
-                </div>
-                <div class="am-btn-group am-btn-group-sm am-hide" id="fileOperation">
-                    <button type="button" class="am-btn am-btn-default" id="fileDownload"><i class="am-icon-download"></i></button>
-                    <button type="button" class="am-btn am-btn-default" id="filePreview"><i class="am-icon-eye"></i></button>
-                    <button type="button" class="am-btn am-btn-default" id="fileRemove"><i class="am-icon-remove"></i></button>
-                </div>
-            </div>
-            <hr>
-
-            <ul class="am-avg-sm-4 am-avg-md-8 am-avg-lg-12 am-margin gallery-list" id="file-ul">
-
-            </ul>
-        </div>
-
-        <footer class="admin-content-footer">
-            <hr>
-            <p class="am-padding-left">© 2017 Zzzzz, Inc. Licensed under Zzz license.</p>
-        </footer>
-    </div>
-    <!-- content end -->
-
 </div>
 
-<a href="#" class="am-icon-btn am-icon-th-list am-show-sm-only admin-menu"
-   data-am-offcanvas="{target: '#admin-offcanvas'}"></a>
+<!--新建文件夹-->
+<div class="am-modal am-modal-prompt" tabindex="-1" id="dirInput">
+    <div class="am-modal-dialog">
+        <div class="am-modal-hd">文件夹名字</div>
+        <div class="am-modal-bd">
+            <input type="text" class="am-modal-prompt-input">
+        </div>
+        <div class="am-modal-footer">
+            <span class="am-modal-btn" data-am-modal-cancel>取消</span>
+            <span class="am-modal-btn" data-am-modal-confirm>确定</span>
+        </div>
+    </div>
+</div>
+
+<!--二维码-->
+<div class="am-modal am-modal-no-btn" tabindex="-1" id="myQrcode">
+    <div class="am-modal-dialog">
+        <div class="am-modal-hd">
+            <h4 class="am-popup-title" id="qrcodeTitle">...</h4>
+            <span data-am-modal-close class="am-close">&times;</span>
+        </div>
+        <div class="am-modal-bd" id="qrcodeContent">
+        </div>
+    </div>
+</div>
 
 <script type="text/html" id="file-li">
     <li>
@@ -108,17 +94,4 @@
         </a>
     </li>
 </script>
-<!--[if lt IE 9]>
-<script src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
-<script src="http://cdn.staticfile.org/modernizr/2.8.3/modernizr.js"></script>
-<script src="assets/js/amazeui.ie8polyfill.min.js"></script>
-<![endif]-->
-
-<!--[if (gte IE 9)|!(IE)]><!-->
-<script src="assets/js/jquery.min.js"></script>
-<!--<![endif]-->
-<script src="assets/js/amazeui.min.js"></script>
-<script src="assets/js/app.js"></script>
-<script src="static/src/index/index.js"></script>
-</body>
-</html>
+{/block}

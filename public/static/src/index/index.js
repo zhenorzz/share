@@ -10,6 +10,7 @@ $(function () {
             child.removeClass('am-disabled');
             var button = '<button type="button" class="am-btn am-btn-default am-disabled" data-value="' + dir + '">' + file + '</button>';
             catalog.append(button);
+            $('#dirCreate').data('dir', dir);
             writeFiles(data, dir);
         });
     });
@@ -52,14 +53,52 @@ $(function () {
         });
     });
 
-    //预览
-    $('#filePreview').click(function () {
-        window.open('/index/File/preview?file=' + $(this).data('file'));
+    //创建文件夹
+    $('#dirCreate').on('click', function() {
+        $('#dirInput').modal({
+            relatedTarget: this,
+            onConfirm: function(e) {
+                var dir = $(this.relatedTarget).data('dir');
+                var name = e.data;
+                $.post("/index/File/create", {dir: dir, name: name}, function (data) {
+                    read(dir);
+                });
+            }
+        });
     });
 
     //下载
     $('#fileDownload').click(function () {
         window.open('/index/File/download?file=' + $(this).data('file'));
+    });
+
+    //二维码
+    $('#fileQrcode').click(function () {
+        var file = $(this).data('file');
+        var index = file.lastIndexOf("/");
+        var file_name;
+        if (index === -1) {
+            file_name = file;
+        } else {
+            file_name = file.substring(index+1);
+        }
+        $('#qrcodeTitle').text(file_name);
+        $('#qrcodeContent').empty().qrcode(window.location.origin + '/index/File/download?file=' + utf16to8(file));
+    });
+    //预览
+    $('#filePreview').click(function () {
+        var file = $(this).data('file');
+        var index = file.lastIndexOf("/");
+        var file_name;
+        if (index === -1) {
+            file_name = file;
+        } else {
+            file_name = file.substring(index+1);
+        }
+        $('#previewTitle').text(file_name);
+        $.get("/index/File/preview", {file: file}, function (data) {
+            $('#previewContent').empty().append(data);
+        });
     });
 
     //删除
@@ -89,7 +128,6 @@ $(function () {
         e.stopPropagation();
     })
 });
-
 
 //读文件
 function read(dir) {
@@ -137,4 +175,25 @@ function writeFiles(data, dir) {
         $('#catalog').children().removeClass('am-disabled');
         $('#catalog').children(":last").addClass('am-disabled');
     }
+}
+
+//转码
+function utf16to8(str) {
+    var out, i, len, c;
+    out = "";
+    len = str.length;
+    for (i = 0; i < len; i++) {
+        c = str.charCodeAt(i);
+        if ((c >= 0x0001) && (c <= 0x007F)) {
+            out += str.charAt(i);
+        } else if (c > 0x07FF) {
+            out += String.fromCharCode(0xE0 | ((c >> 12) & 0x0F));
+            out += String.fromCharCode(0x80 | ((c >> 6) & 0x3F));
+            out += String.fromCharCode(0x80 | ((c >> 0) & 0x3F));
+        } else {
+            out += String.fromCharCode(0xC0 | ((c >> 6) & 0x1F));
+            out += String.fromCharCode(0x80 | ((c >> 0) & 0x3F));
+        }
+    }
+    return out;
 }
