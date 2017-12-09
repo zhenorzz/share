@@ -8,11 +8,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="renderer" content="webkit">
     <meta http-equiv="Cache-Control" content="no-siteapp"/>
-    <link rel="icon" href="favicon.ico">
-    <link rel="apple-touch-icon-precomposed" href="assets/i/app-icon72x72@2x.png">
+    <link rel="icon" href="/favicon.ico">
+    <link rel="apple-touch-icon-precomposed" href="/assets/i/app-icon72x72@2x.png">
     <meta name="apple-mobile-web-app-title" content="Amaze UI"/>
-    <link rel="stylesheet" href="assets/css/amazeui.min.css"/>
-    <link rel="stylesheet" href="assets/css/admin.css">
+    <link rel="stylesheet" href="/assets/css/amazeui.min.css"/>
+    <link rel="stylesheet" href="/assets/css/admin.css">
 </head>
 <body>
 <!--[if lte IE 9]>
@@ -40,14 +40,16 @@
     <div class="admin-sidebar am-offcanvas" id="admin-offcanvas">
         <div class="am-offcanvas-bar admin-offcanvas-bar">
             <ul class="am-list admin-sidebar-list">
-                <li><a href="#"><span class="am-icon-folder"></span> 目录</a></li>
+                <li><a href="/"><span class="am-icon-folder"></span> 目录</a></li>
                 <li class="admin-parent">
                     <a class="am-cf" data-am-collapse="{target: '#collapse-nav'}"><span
                             class="am-icon-briefcase"></span> 小工具 <span
                             class="am-icon-angle-right am-fr am-margin-right"></span></a>
                     <ul class="am-list am-collapse admin-sidebar-sub am-in" id="collapse-nav">
+                        <li><a href="/index/Json/index" class="am-cf"><span class="am-icon-cubes"></span> Json格式化</a></li>
+                        <li><a href="/index/Qrcode/index" class="am-cf"><span class="am-icon-qrcode"></span> 二维码</a></li>
                         <li><a href="#" class="am-cf"><span class="am-icon-link"></span> Http<span
-                                class="am-icon-star am-fr am-margin-right admin-icon-yellow"></span></a></li>
+                            class="am-icon-star am-fr am-margin-right admin-icon-yellow"></span></a></li>
                     </ul>
                 </li>
             </ul>
@@ -60,21 +62,21 @@
 </div>
 
 <a href="#" class="am-icon-btn am-icon-th-list am-show-sm-only admin-menu"
-   data-am-offcanvas="{target: '#admin-offcanvas'}">
+   data-am-offcanvas="{target: '#admin-offcanvas'}"></a>
 
 {block name="modal"}模态框{/block}
 
 <!--[if lt IE 9]>
 <script src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
 <script src="http://cdn.staticfile.org/modernizr/2.8.3/modernizr.js"></script>
-<script src="assets/js/amazeui.ie8polyfill.min.js"></script>
+<script src="/assets/js/amazeui.ie8polyfill.min.js"></script>
 <![endif]-->
 
 <!--[if (gte IE 9)|!(IE)]><!-->
-<script src="assets/js/jquery.min.js"></script>
+<script src="/assets/js/jquery.min.js"></script>
 <!--<![endif]-->
-<script src="assets/js/amazeui.min.js"></script>
-<script src="assets/js/app.js"></script>
-<script src="static/src/index/index.js"></script>
+<script src="/assets/js/amazeui.min.js"></script>
+<script src="/assets/js/app.js"></script>
+{block name="script"}脚本{/block}
 </body>
 </html>
