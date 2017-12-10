@@ -18,7 +18,8 @@
     "require": {
         "php": ">=5.4.0",
         "topthink/framework": "~5.0.0",
-        "cebe/markdown": "~1.1.1"
+        "cebe/markdown": "~1.1.1",
+        "endroid/qrcode": "^2.5"
     },
     "autoload": {
         "psr-4": {

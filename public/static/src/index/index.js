@@ -164,6 +164,9 @@ function writeFiles(data, dir) {
             case '.md':
                 fileLi.find('img').attr('src', 'static/images/markdown.png');
                 break;
+            case '.pdf':
+                fileLi.find('img').attr('src', 'static/images/pdf.png');
+                break;
             default:
                 fileLi.find('img').attr('src', 'static/images/unknown.png');
         }

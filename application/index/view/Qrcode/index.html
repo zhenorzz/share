@@ -1,8 +1,54 @@
 {extend name="base" /}
 
 {block name="body"}
-
+<div class="am-cf am-padding am-padding-bottom-0">
+    <div class="am-fl am-cf">
+        <strong class="am-text-primary am-text-lg">二维码制作</strong>
+    </div>
+</div>
+<hr/>
+<div class="am-g">
+    <div class="am-u-sm-12 am-u-md-8">
+        <form class="am-form am-form-horizontal" id="qrcodeForm">
+            <div class="am-form-group">
+                <label for="qrcodeContent" class="am-u-sm-3 am-form-label">二维码文本：</label>
+                <div class="am-u-sm-9">
+                    <textarea class="" rows="5" id="qrcodeContent" name="qrcodeContent"></textarea>
+                </div>
+            </div>
+            <label for="qrcodeLogo" class="am-u-sm-3 am-form-label">二维码logo：</label>
+            <div class="am-panel am-panel-default am-u-sm-9">
+                <div class="am-panel-bd">
+                    <div class="am-g">
+                        <div class="am-u-md-4">
+                            <img id="logoPreview" class="am-img-circle am-img-thumbnail" src="/static/images/logo.png" alt="">
+                        </div>
+                        <div class="am-u-md-8">
+                            <p>二维码中间的logo </p>
+                            <div class="am-form-group am-margin-bottom-0">
+                                <input type="file" id="qrcodeLogo" name="qrcodeLogo">
+                                <p class="am-form-help">请选择要上传的文件...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="am-form-group">
+                <div class="am-u-sm-9 am-u-sm-push-3">
+                    <button type="button" class="am-btn am-btn-primary" id="createQrcode">生成二维码</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="am-panel am-panel-default am-u-sm-12 am-u-md-4 am-text-center">
+        <img id="qrcode" class="am-img-circle am-img-thumbnail" src="/static/images/logo.png" alt="">
+        <div class="am-form-group">
+            <button type="button" class="am-btn am-btn-primary">下载二维码</button>
+        </div>
+    </div>
+</div>
 {/block}
 
 {block name="script"}
+<script src="/static/src/qrcode/index.js"></script>
 {/block}
