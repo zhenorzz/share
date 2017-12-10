@@ -56,15 +56,23 @@
         </div>
     </div>
     <!-- sidebar end -->
-    {block name="content"}内容{/block}
-
-
+    <!-- content start -->
+    <div class="admin-content">
+        <div class="admin-content-body">
+            {block name="body"}{/block}
+        </div>
+        <footer class="admin-content-footer">
+            <hr>
+            <p class="am-padding-left">© 2017 Zzzzz, Inc. Licensed under apache license.</p>
+        </footer>
+    </div>
+    <!-- content end -->
 </div>
 
 <a href="#" class="am-icon-btn am-icon-th-list am-show-sm-only admin-menu"
    data-am-offcanvas="{target: '#admin-offcanvas'}"></a>
 
-{block name="modal"}模态框{/block}
+{block name="modal"}{/block}
 
 <!--[if lt IE 9]>
 <script src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
@@ -77,6 +85,6 @@
 <!--<![endif]-->
 <script src="/assets/js/amazeui.min.js"></script>
 <script src="/assets/js/app.js"></script>
-{block name="script"}脚本{/block}
+{block name="script"}{/block}
 </body>
 </html>

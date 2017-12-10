@@ -6,7 +6,7 @@ $(function () {
         var child = catalog.children('button:last');
         var file = $.trim($(this).text());
         var dir = child.data('value') + file + '/';
-        $.get("/index/File/read", {path: dir}, function (data) {
+        $.get("/index/Index/read", {path: dir}, function (data) {
             child.removeClass('am-disabled');
             var button = '<button type="button" class="am-btn am-btn-default am-disabled" data-value="' + dir + '">' + file + '</button>';
             catalog.append(button);
@@ -27,7 +27,7 @@ $(function () {
     $('#catalog').on("click", "button", function () {
         var index = $(this).index();
         var dir = $.trim($(this).data('value'));
-        $.get("/index/File/read", {path: dir}, function (data) {
+        $.get("/index/Index/read", {path: dir}, function (data) {
             $('#catalog').children("button:gt(" + index + ")").remove();
             writeFiles(data, dir);
         });
@@ -37,7 +37,7 @@ $(function () {
     $('#fileUpload').change(function () {
         var formData = new FormData($('#uploadForm')[0]);
         var dir = $('#catalog').children('button:last').data('value');
-        var url = "/index/File/upload?path=" + dir;
+        var url = "/index/Index/upload?path=" + dir;
         $.ajax({
             url: url,
             type: 'POST',
@@ -60,7 +60,7 @@ $(function () {
             onConfirm: function(e) {
                 var dir = $(this.relatedTarget).data('dir');
                 var name = e.data;
-                $.post("/index/File/create", {dir: dir, name: name}, function (data) {
+                $.post("/index/Index/create", {dir: dir, name: name}, function (data) {
                     read(dir);
                 });
             }
@@ -69,7 +69,7 @@ $(function () {
 
     //下载
     $('#fileDownload').click(function () {
-        window.open('/index/File/download?file=' + $(this).data('file'));
+        window.open('/index/Index/download?file=' + $(this).data('file'));
     });
 
     //二维码
@@ -83,7 +83,7 @@ $(function () {
             file_name = file.substring(index+1);
         }
         $('#qrcodeTitle').text(file_name);
-        $('#qrcodeContent').empty().qrcode(window.location.origin + '/index/File/download?file=' + utf16to8(file));
+        $('#qrcodeContent').empty().qrcode(window.location.origin + '/index/Index/download?file=' + utf16to8(file));
     });
     //预览
     $('#filePreview').click(function () {
@@ -96,7 +96,7 @@ $(function () {
             file_name = file.substring(index+1);
         }
         $('#previewTitle').text(file_name);
-        $.get("/index/File/preview", {file: file}, function (data) {
+        $.get("/index/Index/preview", {file: file}, function (data) {
             $('#previewContent').empty().append(data);
         });
     });
@@ -104,7 +104,7 @@ $(function () {
     //删除
     $('#fileRemove').click(function () {
         var file = $(this).data('file');
-        $.post('/index/File/delete', {file: file}, function (data) {
+        $.post('/index/Index/delete', {file: file}, function (data) {
             var index = file.lastIndexOf("/");
             if (index === -1) {
                 read('');
@@ -131,7 +131,7 @@ $(function () {
 
 //读文件
 function read(dir) {
-    $.get("/index/File/read", {path: dir}, function (data) {
+    $.get("/index/Index/read", {path: dir}, function (data) {
         writeFiles(data, dir);
     });
 }

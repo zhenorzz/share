@@ -1,50 +1,33 @@
 {extend name="base" /}
 
-{block name="content"}
-<!-- content start -->
-<div class="admin-content">
-    <div class="admin-content-body">
-        <!--<div class="am-cf am-padding am-padding-bottom-0">-->
-        <!--<ol class="am-breadcrumb am-breadcrumb-slash am-margin-bottom-0" id="breadcrumb-ol">-->
-        <!--<li data-value=""><a href="#" class="am-icon-folder">根目录</a></li>-->
-        <!--</ol>-->
-        <!--</div>-->
-        <div class="am-cf am-padding am-padding-bottom-0 am-btn-toolbar">
-            <div class="am-btn-group am-btn-group-sm" id="catalog">
-                <button type="button" class="am-btn am-btn-default" data-value="">根目录</button>
-            </div>
-            <div class="am-btn-group am-form-file am-btn-group-sm">
-                <form id="uploadForm" enctype="multipart/form-data">
-                    <button type="button" class="am-btn am-btn-default am-btn-sm">
-                        <i class="am-icon-cloud-upload"></i> 选择要上传的文件</button>
-                    <input id="fileUpload" type="file" name="file" multiple="">
-                </form>
-            </div>
-            <div class="am-btn-group am-form-file am-btn-group-sm">
-                <button type="button" class="am-btn am-btn-default am-btn-sm" data-dir="" id="dirCreate">
-                    <i class="am-icon-folder-open"></i> 新建文件夹</button>
-            </div>
-            <div class="am-btn-group am-btn-group-sm am-hide" id="fileOperation">
-                <button type="button" class="am-btn am-btn-default" id="fileDownload"><i class="am-icon-download"></i></button>
-                <button type="button" class="am-btn am-btn-default" data-am-modal="{target: '#myQrcode'}" id="fileQrcode"><i class="am-icon-qrcode"></i></button>
-                <button type="button" class="am-btn am-btn-default" data-am-modal="{target: '#my-popup'}" id="filePreview"><i class="am-icon-eye"></i></button>
-                <button type="button" class="am-btn am-btn-default" id="fileRemove"><i class="am-icon-remove"></i></button>
-            </div>
+{block name="body"}
+    <div class="am-cf am-padding am-padding-bottom-0 am-btn-toolbar">
+        <div class="am-btn-group am-btn-group-sm" id="catalog">
+            <button type="button" class="am-btn am-btn-default" data-value="">根目录</button>
         </div>
-        <hr>
-
-        <ul class="am-avg-sm-4 am-avg-md-8 am-avg-lg-12 am-margin gallery-list" id="file-ul">
-
-        </ul>
+        <div class="am-btn-group am-form-file am-btn-group-sm">
+            <form id="uploadForm" enctype="multipart/form-data">
+                <button type="button" class="am-btn am-btn-default am-btn-sm">
+                    <i class="am-icon-cloud-upload"></i> 选择要上传的文件</button>
+                <input id="fileUpload" type="file" name="file" multiple="">
+            </form>
+        </div>
+        <div class="am-btn-group am-form-file am-btn-group-sm">
+            <button type="button" class="am-btn am-btn-default am-btn-sm" data-dir="" id="dirCreate">
+                <i class="am-icon-folder-open"></i> 新建文件夹</button>
+        </div>
+        <div class="am-btn-group am-btn-group-sm am-hide" id="fileOperation">
+            <button type="button" class="am-btn am-btn-default" id="fileDownload"><i class="am-icon-download"></i></button>
+            <button type="button" class="am-btn am-btn-default" data-am-modal="{target: '#myQrcode'}" id="fileQrcode"><i class="am-icon-qrcode"></i></button>
+            <button type="button" class="am-btn am-btn-default" data-am-modal="{target: '#my-popup'}" id="filePreview"><i class="am-icon-eye"></i></button>
+            <button type="button" class="am-btn am-btn-default" id="fileRemove"><i class="am-icon-remove"></i></button>
+        </div>
     </div>
+    <hr>
 
-    <footer class="admin-content-footer">
-        <hr>
-        <p class="am-padding-left">© 2017 Zzzzz, Inc. Licensed under Zzz license.</p>
-    </footer>
-</div>
-<!-- content end -->
+    <ul class="am-avg-sm-4 am-avg-md-8 am-avg-lg-12 am-margin gallery-list" id="file-ul">
 
+    </ul>
 {/block}
 {block name="modal"}
 <!--预览框-->
