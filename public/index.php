@@ -13,5 +13,15 @@
 
 // 定义应用目录
 define('APP_PATH', __DIR__ . '/../application/');
+header('Access-Control-Allow-Origin: *');
+
+/**
+ * 浏览器第一次在处理复杂请求的时候会先发起OPTIONS请求。路由在处理请求的时候会导致PUT请求失败。
+ * 在检测到option请求的时候就停止继续执行
+ */
+if($_SERVER['REQUEST_METHOD'] == 'OPTIONS'){
+	header('Access-Control-Allow-Headers:x-requested-with');
+    exit;
+}
 // 加载框架引导文件
 require __DIR__ . '/../thinkphp/start.php';
