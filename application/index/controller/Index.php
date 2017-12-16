@@ -77,10 +77,10 @@ class Index extends Controller
         $File = new File();
         $file_name = $File->convert($file_name);
         if (!file_exists($file_name)) {
-            return false;
+            return json(['createResult' => false, 'errorMsg' => '不存在文件']);
         }
         unlink($file_name);
-        return $file;
+        return json(['createResult' => true, 'errorMsg' => '']);
     }
 
     /**
