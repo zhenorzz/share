@@ -1,4 +1,5 @@
 <?php
+
 namespace app\index\controller;
 
 use Factory\FileFactory;
@@ -27,21 +28,10 @@ class Index extends Controller
         $File = new File();
         $dir = $File->convert($dir);
         if (file_exists($dir)) {
-            return "已存在文件夹";
+            return json(['createResult' => false, 'errorMsg' => '已存在文件夹']);
         }
-        mkdir ($dir,0777);
-        return true;
-    }
-
-    /**
-     * 保存新建的资源
-     *
-     * @param  \think\Request $request
-     * @return \think\Response
-     */
-    public function save(Request $request)
-    {
-        //
+        mkdir($dir, 0777);
+        return json(['createResult' => true, 'errorMsg' => '']);
     }
 
     /**
@@ -53,9 +43,10 @@ class Index extends Controller
     public function read($path)
     {
         $dir = "./share/" . $path;
+        $File = new File();
+        $dir = $File->convert($dir, UTF8TOGBK);
         $files = scandir($dir);
         $data = [];
-        $File = new File();
         foreach ($files as $file) {
             if ($file == '.' || $file == '..') {
                 continue;
@@ -72,28 +63,6 @@ class Index extends Controller
         return json($data);
     }
 
-    /**
-     * 显示编辑资源表单页.
-     *
-     * @param  int $id
-     * @return \think\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * 保存更新的资源
-     *
-     * @param  \think\Request $request
-     * @param  int $id
-     * @return \think\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
 
     /**
      * 删除指定资源
