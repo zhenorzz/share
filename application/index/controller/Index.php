@@ -138,14 +138,21 @@ class Index extends Controller
      * @param  string $path
      * @return \think\response\Json
      */
-    public function upload($path)
+    public function upload($path, Request $request)
     {
+
         $file = $_FILES['file'];
+        $param = $request->param();
         $path = "./share/" . $path;
-        $name = $path . $_FILES["file"]["name"];
+        $name = $path . $param['fileName'];
         $File = new File();
         $name = $File->convert($name);
-        move_uploaded_file($file["tmp_name"], $name);
+        if (!file_exists($name)) {
+            move_uploaded_file($file["tmp_name"], $name);
+        } else {
+            file_put_contents($name,file_get_contents($file["tmp_name"]),FILE_APPEND);
+        }
+//        move_uploaded_file($file["tmp_name"], $name);
         return json($file);
     }
 }

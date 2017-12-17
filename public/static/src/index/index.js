@@ -35,22 +35,50 @@ $(function () {
 
     //文件上传
     $('#fileUpload').change(function () {
-        var formData = new FormData($('#uploadForm')[0]);
+        var files = document.getElementById('fileUpload').files;
+        var file = files[0];
+        var totalSize = file.size;//文件大小
+        var lastModified = file.lastModified;
+        var blockSize = 1024 * 1024 * 2;//块大小
+        var blockCount = Math.ceil(totalSize / blockSize);//总块数
+        var uploadId = 1;
+        var index = 0;
+        var formData = new FormData();
+        formData.append('fileName', file.name);
+        formData.append('total', blockCount);//总块数
+        formData.append('index', index);//当前上传的块下标
+        formData.append('uploadId', uploadId);//上传编号
+        formData.append('lastModified', lastModified); //最近修改时间
+        formData.append('file', null);
+        console.log(totalSize);
+        var start = index * blockSize;
+        var end = Math.min(totalSize, start + blockSize);
+        var block = file.slice(start, end);
         var dir = $('#catalog').children('button:last').data('value');
         var url = "/index/Index/upload?path=" + dir;
-        $.ajax({
-            url: url,
-            type: 'POST',
-            cache: false,
-            data: formData,
-            processData: false,
-            contentType: false,
-            beforeSend: function () {
-            },
-            success: function () {
-                read(dir);
-            }
-        });
+        while (start < totalSize) {
+            formData.set('file', block);
+            formData.set('index', index);
+            formData.set('uploadId', uploadId);
+            $.ajax({
+                url: url,
+                type: 'POST',
+                cache: false,
+                data: formData,
+                processData: false,
+                contentType: false,
+                async:false,
+                beforeSend: function () {
+                },
+                success: function () {
+                    index++;
+                    start = index * blockSize;
+                    end = Math.min(totalSize, start + blockSize);
+                    block = file.slice(start, end);
+                }
+            });
+        }
+        // read(dir);
     });
 
     //创建文件夹
