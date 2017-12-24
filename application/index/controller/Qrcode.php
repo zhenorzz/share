@@ -14,8 +14,6 @@ class Qrcode extends Controller
     }
     public function create(Request $request)
     {
-        dump($_FILES);die;
-        return $_FILES;
         $param = $request->post();
         $result = $this->validate($param,
             [
@@ -29,11 +27,17 @@ class Qrcode extends Controller
         $qrCode = new \Endroid\QrCode\QrCode($qrcodeContent);
         $qrCode->setSize(256);
         $qrCode->setEncoding('UTF-8');
-        $qrCode->setValidateResult(true);
+        $qrCode->setValidateResult(false);
         try {
             $qrCode->setWriterByName('png');
             if (!empty($_FILES['qrcodeLogo']['tmp_name'])) {
                 $qrCode->setLogoPath($_FILES['qrcodeLogo']['tmp_name']);
+                $qrCode->setLogoWidth(50);
+            } elseif (preg_match('/^(data:\s*image\/(\w+);base64,)/', $param['qrcodeLogo'], $result)) {
+                $type = $result[2];
+                $new_file = time(). '.' . $type;
+                file_put_contents($new_file, base64_decode(str_replace($result[1], '', $param['qrcodeLogo'])));
+                $qrCode->setLogoPath($new_file);
                 $qrCode->setLogoWidth(50);
             }
         } catch (InvalidPathException $e) {
@@ -41,7 +45,9 @@ class Qrcode extends Controller
         } catch (InvalidWriterException $e) {
             return $e->getMessage();
         }
-        return $qrCode->writeDataUri();
+        $qrcodeImg = $qrCode->writeDataUri();
+        isset($new_file) && file_exists($new_file) && unlink($new_file);
+        return $qrcodeImg;
     }
 
     public function logoPreview(Request $request)
