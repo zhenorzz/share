@@ -14,6 +14,8 @@ class Qrcode extends Controller
     }
     public function create(Request $request)
     {
+        dump($_FILES);die;
+        return $_FILES;
         $param = $request->post();
         $result = $this->validate($param,
             [
@@ -40,5 +42,25 @@ class Qrcode extends Controller
             return $e->getMessage();
         }
         return $qrCode->writeDataUri();
+    }
+
+    public function logoPreview(Request $request)
+    {
+        $file = $request->file('file');
+        $result = $this->validate(
+            [
+                'file' => $file,
+            ],
+            [
+                'file'  => 'fileExt:png,jpg,jpeg',
+            ]);
+        if(true !== $result){
+            // 验证失败 输出错误信息
+            return json($result, 403);
+        }
+        $fileContent = base64_encode(file_get_contents($_FILES['file']['tmp_name']));
+        $fileType = $_FILES['file']['type'];
+        $img= 'data:'.$fileType.';base64,'. $fileContent;
+        return $img;
     }
 }
