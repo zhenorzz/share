@@ -6,7 +6,6 @@ use Factory\FileFactory;
 use think\Request;
 use think\Controller;
 use app\index\model\File;
-use cebe\markdown\GithubMarkdown;
 
 class Index extends Controller
 {
