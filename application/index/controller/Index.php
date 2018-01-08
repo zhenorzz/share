@@ -45,7 +45,10 @@ class Index extends Controller
         $File = new File();
         $dir = $File->convert($dir, UTF8TOGBK);
         $files = scandir($dir);
-        $data = [];
+        $data = [
+            'dir' => [],
+            'file' => [],
+        ];
         foreach ($files as $file) {
             if ($file == '.' || $file == '..') {
                 continue;
