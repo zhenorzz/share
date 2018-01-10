@@ -13,7 +13,10 @@ class Index extends Controller
     {
         return $this->fetch();
     }
-
+    public function test(Request $request){
+        $param = $request->param();
+        return json_encode($param);
+    }
     /**
      * 创建目录.
      *

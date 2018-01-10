@@ -19,7 +19,8 @@
         "php": ">=5.4.0",
         "topthink/framework": "~5.0.0",
         "cebe/markdown": "~1.1.1",
-        "endroid/qrcode": "^2.5"
+        "topthink/think-testing": "1.*",
+        "endroid/qr-code": "^2.5"
     },
     "autoload": {
         "psr-4": {
