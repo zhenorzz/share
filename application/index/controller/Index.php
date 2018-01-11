@@ -9,6 +9,12 @@ use app\index\model\File;
 
 class Index extends Controller
 {
+    private $shareDir;
+    public function _initialize()
+    {
+        $this->shareDir = ROOT_PATH . 'public/share/';
+    }
+
     public function index()
     {
         return $this->fetch();
@@ -26,7 +32,38 @@ class Index extends Controller
     public function create(Request $request)
     {
         $param = $request->post();
-        $dir = "./share/" . trim($param['dir']) . trim($param['name']) . DS;
+        $result = $this->validate($param,
+            [
+                'name' => 'require',
+            ]);
+        if(true !== $result){
+            // 验证失败 输出错误信息
+            return json(['createResult' => false, 'errorMsg' => $result]);
+        }
+        /*
+         * 文件夹不能含有 ?*\<>:"|
+         * 去除左右的空白格
+         * 完成正则删除左右DS，补上最后一个DS 保证程序的健壮性
+         */
+        $dir = preg_replace("/[\?\*\\<>:\"\|]/", "", trim($param['dir']));
+        $dir = trim($dir, '/');
+        if (! empty($dir)) {
+            $dir = $this->shareDir . $dir . DS;
+            if (! file_exists($dir)) {
+                return json(['createResult' => false, 'errorMsg' => '不存在文件夹']);
+            }
+        } else {
+            $dir = $this->shareDir;
+        }
+        /*
+         * 名字不能含有 ?*\/<>:"|
+         * 去除左右的空白格
+         */
+        $name = preg_replace("/[\?\*\/\\<>:\"\|]/", "", trim($param['name']));
+        if (empty($name)) {
+            return json(['createResult' => false, 'errorMsg' => '文件夹名字格式错误']);
+        }
+        $dir = $dir .$name . DS;
         $File = new File();
         $dir = $File->convert($dir);
         if (file_exists($dir)) {
