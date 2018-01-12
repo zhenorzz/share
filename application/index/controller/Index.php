@@ -19,10 +19,6 @@ class Index extends Controller
     {
         return $this->fetch();
     }
-    public function test(Request $request){
-        $param = $request->param();
-        return json_encode($param);
-    }
     /**
      * 创建目录.
      *
@@ -40,20 +36,11 @@ class Index extends Controller
             // 验证失败 输出错误信息
             return json(['createResult' => false, 'errorMsg' => $result]);
         }
-        /*
-         * 文件夹不能含有 ?*\<>:"|
-         * 去除左右的空白格
-         * 完成正则删除左右DS，补上最后一个DS 保证程序的健壮性
-         */
-        $dir = preg_replace("/[\?\*\\<>:\"\|]/", "", trim($param['dir']));
-        $dir = trim($dir, '/');
-        if (! empty($dir)) {
-            $dir = $this->shareDir . $dir . DS;
-            if (! file_exists($dir)) {
-                return json(['createResult' => false, 'errorMsg' => '不存在文件夹']);
-            }
-        } else {
-            $dir = $this->shareDir;
+        $File = new File();
+
+        $dir = $this->shareDir . $File->pregDir($param['dir']);
+        if (! file_exists($dir)) {
+            return json(['createResult' => false, 'errorMsg' => '不存在文件夹']);
         }
         /*
          * 名字不能含有 ?*\/<>:"|
@@ -64,7 +51,7 @@ class Index extends Controller
             return json(['createResult' => false, 'errorMsg' => '文件夹名字格式错误']);
         }
         $dir = $dir .$name . DS;
-        $File = new File();
+
         $dir = $File->convert($dir);
         if (file_exists($dir)) {
             return json(['createResult' => false, 'errorMsg' => '已存在文件夹']);
@@ -81,8 +68,8 @@ class Index extends Controller
      */
     public function read($path)
     {
-        $dir = "./share/" . $path;
         $File = new File();
+        $dir = $this->shareDir . $File->pregDir($path);
         $dir = $File->convert($dir, UTF8TOGBK);
         $files = scandir($dir);
         $data = [

@@ -23,4 +23,22 @@ class File
         return $file;
     }
 
+    /**
+     * 文件夹不能含有 ?*\<>:"|
+     * 去除左右的空白格
+     * 完成正则删除左右DS，补上最后一个DS 保证程序的健壮性
+     * @param $dir
+     * @return mixed|string
+     */
+    public function pregDir($dir){
+        $dir = preg_replace("/[\?\*\\<>:\"\|]/", "", trim($dir));
+        $dir = trim($dir, '/');
+        if (! empty($dir)) {
+            $dir = $dir . DS;
+
+        } else {
+            $dir = '';
+        }
+        return $dir;
+    }
 }
