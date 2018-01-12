@@ -10,7 +10,7 @@ class NullObject
     }
     public function __call($method,$arg)
     {
-        return '不支持'. $this->file .'文件类型的预览！';
+        return '无法打开' . $this->file;
     }
 
 
