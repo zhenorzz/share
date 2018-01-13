@@ -13,10 +13,6 @@ class Markdown implements FileProperties
 
     public function read()
     {
-        //首先要判断给定的文件存在与否
-        if (!file_exists($this->file)) {
-            return "没有该文件文件";
-        }
         $markdown = file_get_contents($this->file);
         $parser = new GithubMarkdown();
         $parser->html5 = true;
