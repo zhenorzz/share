@@ -145,11 +145,12 @@ class Index extends Controller
         }
         $fp = fopen($file_name, "r");
         $file_size = filesize($file_name);
+        $file_name = preg_replace('/^.+[\\\\\/]/','',$file_name);
         //下载文件需要用到的头
         header("Content-type: application/octet-stream");
         header("Accept-Ranges: bytes");
         header("Accept-Length:" . $file_size);
-        header("Content-Disposition: attachment; filename=" . basename($file_name));
+        header("Content-Disposition: attachment; filename=" . $file_name);
         $buffer = 1024;
         $file_count = 0;
         //向浏览器返回数据
