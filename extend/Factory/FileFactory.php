@@ -37,9 +37,9 @@ class FileFactory
         } else {
             $file_extension = $file;
         }
-        if ($type === 'plain' && ($file_extension === 'md' || $file_extension === 'markdown')) {
+        if ($content === 'text' && ($file_extension === 'md' || $file_extension === 'markdown')) {
             return new Markdown($file);
-        } else if ($type === 'plain') {
+        }  else if ($type === 'plain') {
             return new Txt($file);
         } else {
             return new NullObject($file);
